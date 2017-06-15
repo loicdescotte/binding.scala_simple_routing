@@ -17,6 +17,19 @@ case class TabState(content: String, hash: String)
 object Tabs extends JSApp {
 
   @dom def render() = {
+
+    import io.github.hamsters.Validation
+    import Validation._
+
+    val e1 = Right(1)
+    val e2 = Left("error 1")
+    val e3 = Left("error 2")
+    val e4 = Right("4")
+
+    val validationResult = Validation.result(e1,e2, e3) // List[String] : Left(List("error 1", "error 2"))
+
+    val errorMessages = validationResult.left.get.mkString(",")
+
     val activeTab: Var[TabState] = Var(TabState("select a tab", "#/"))
 
     Route.watchHash(activeTab)(new Route.Format[TabState] {
@@ -27,7 +40,7 @@ object Tabs extends JSApp {
     })
 
     <div>
-      <span><a onclick={e: Event => activeTab := TabState("tab 1 is selected", "#/1")}>|Tab 1|</a></span>
+      <span><a onclick={e: Event => activeTab := TabState("tab 1 is selected : error messages : " + errorMessages, "#/1")}>|Tab 1|</a></span>
       <span><a onclick={e: Event => activeTab := TabState("tab 2 is selected", "#/2")}>|Tab 2|</a></span>
       <div>{activeTab.bind.content}</div>
     </div>
