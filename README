@@ -1,1 +1,3 @@
-Simple Scala.js and Binding.scala example using Routes and URL hash to save app state
+Simple Scala.js and Binding.scala example using Routes and URL hash to save app state.  
+To run this example : sbt fastOptJS
+Then open index-dev.html in your browser.
