@@ -40,7 +40,8 @@ object Tabs extends JSApp {
     })
 
     <div>
-      <span><a onclick={e: Event => activeTab := TabState("tab 1 is selected : error messages : " + errorMessages, "#/1")}>|Tab 1|</a></span>
+      <div>error messages : {errorMessages} </div>
+      <span><a onclick={e: Event => activeTab := TabState("tab 1 is selected", "#/1")}>|Tab 1|</a></span>
       <span><a onclick={e: Event => activeTab := TabState("tab 2 is selected", "#/2")}>|Tab 2|</a></span>
       <div>{activeTab.bind.content}</div>
     </div>
