@@ -26,7 +26,7 @@ object Tabs extends JSApp {
     val e3 = Left("error 2")
     val e4 = Right("4")
 
-    val validationResult = Validation.result(e1,e2, e3) // List[String] : Left(List("error 1", "error 2"))
+    val validationResult = Validation.run(e1,e2, e3) // List[String] : Left(List("error 1", "error 2"))
 
     val errorMessages = validationResult.left.get.mkString(",")
 
