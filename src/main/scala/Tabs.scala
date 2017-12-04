@@ -10,15 +10,17 @@ import org.scalajs.dom.raw.HTMLElement
 import org.scalajs.dom.html.Table
 import org.scalajs.dom.html.Input
 import org.scalajs.dom.document
-
-
-case class TabState(content: String, hash: String)
+import io.github.hamsters.Show
+import io.github.hamsters.ShowMacro
+import io.github.hamsters.Validation
 
 object Tabs extends JSApp {
 
+ @ShowMacro
+ case class TabState(content: String, hash: String)
+
   @dom def render() = {
 
-    import io.github.hamsters.Validation
     import Validation._
 
     val e1 = Right(1)
@@ -26,7 +28,7 @@ object Tabs extends JSApp {
     val e3 = Left("error 2")
     val e4 = Right("4")
 
-    val validationResult = Validation.result(e1,e2, e3) // List[String] : Left(List("error 1", "error 2"))
+    val validationResult = Validation.run(e1,e2, e3) // List[String] : Left(List("error 1", "error 2"))
 
     val errorMessages = validationResult.left.get.mkString(",")
 
@@ -39,7 +41,10 @@ object Tabs extends JSApp {
         override def apply(state: TabState): String = state.hash
     })
 
+    val tabAsText = Show.show(TabState("tab test is selected", "#/test"))
+
     <div>
+      <div>test : {tabAsText} </div>
       <div>error messages : {errorMessages} </div>
       <span><a onclick={e: Event => activeTab := TabState("tab 1 is selected", "#/1")}>|Tab 1|</a></span>
       <span><a onclick={e: Event => activeTab := TabState("tab 2 is selected", "#/2")}>|Tab 2|</a></span>
